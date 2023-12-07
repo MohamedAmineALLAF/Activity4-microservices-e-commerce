@@ -2,13 +2,52 @@
 <p>Welcome to our microservices-based e-commerce application, utilizing technologies such as Consul Discovery, Spring Cloud Config, Spring Cloud Gateway, Angular, and other specific services.</p>
 <h3>Architecture:</h3>
 <img src="captures/capture1.png"></img>
-<h3>Config service:</h3>
-<ul>
-    <li>Consul registered services:</li>
-    <img src="captures/consul-registered-services.jpg"></img>
-</ul>
 <details>
-<summary style="font-size:15px;cursor:pointer">📌 1. CUSTOMER-SERVICE (Click to expand 🖱)</summary>
+<summary style="font-size:15px;cursor:pointer">📌 1. CONFIG SERVICE: (Click to expand 🖱)</summary>
+        <h5>Consul registered services:</h5>
+    <img src="captures/consul-registered-services.jpg"></img>
+
+
+```javascript
+@Entity
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
+public class Customer {
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+        private String name;
+        private String email;
+}
+```
+
+<h5>Repository CustomerRepository</h5>
+
+```javascript
+@RepositoryRestResource
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
+}
+```
+
+<h5>Données de test</h5>
+
+```javascript
+@Bean
+CommandLineRunner start(CustomerRepository customerRepository){
+        return args -> {
+                customerRepository.saveAll(List.of(
+                        Customer.builder().name("Mohamed").email("med@gmail.com").build(),
+                        Customer.builder().name("Hassan").email("hasan@gmail.com").build(),
+                        Customer.builder().name("IMane").email("imane@gmail.com").build()
+                ));
+                customerRepository.findAll().forEach(System.out::println);
+        };
+}
+```
+<h5>Customer service Test</h5>
+<img src="captures/customer-service-test.jpg" width="700">
+</details>
+
+<details>
+<summary style="font-size:15px;cursor:pointer">📌 2. CUSTOMER-SERVICE (Click to expand 🖱)</summary>
         <h5>Entity Customer</h5>
 
 
@@ -50,7 +89,7 @@ CommandLineRunner start(CustomerRepository customerRepository){
 <img src="captures/customer-service-test.jpg" width="700">
 </details>
 <details>
-<summary style="font-size:15px;cursor:pointer">📌 2. GATEWAY-SERVICE (Click to expand 🖱)</summary>
+<summary style="font-size:15px;cursor:pointer">📌 3. GATEWAY-SERVICE (Click to expand 🖱)</summary>
         <h5>Bean de configuration</h5>
         <img src="captures/gateway-bean.jpg" width="700">
         <h5>Configuration de la Gateway</h5>
@@ -60,7 +99,7 @@ CommandLineRunner start(CustomerRepository customerRepository){
         </details>
 
 <details>
-        <summary style="font-size:15px;cursor:pointer">📌 3. INVENTORY-SERVICE (Click to expand 🖱)</summary>
+        <summary style="font-size:15px;cursor:pointer">📌 4. INVENTORY-SERVICE (Click to expand 🖱)</summary>
 <h5>Entity Product</h5>
 
 ```javascript
@@ -116,7 +155,7 @@ CommandLineRunner start(ProductRepository productRepository)
         </details>
 
 <details>
-        <summary style="font-size:15px;cursor:pointer">📌 4. ORDER-SERVICE (Click to expand 🖱)</summary>
+        <summary style="font-size:15px;cursor:pointer">📌 5. ORDER-SERVICE (Click to expand 🖱)</summary>
         <h5>Entity Order</h5>
 
 ```javascript
@@ -240,7 +279,7 @@ public Order getOrder(@PathVariable Long id){
 <img src="captures/order-service-full-order.jpg" width="700">
         </details>
         <details>
-        <summary style="font-size:15px;cursor:pointer">📌 5. BILLING-SERVICE avec consul config et vault (Click to expand 🖱)</summary>
+        <summary style="font-size:15px;cursor:pointer">📌 6. BILLING-SERVICE avec consul config et vault (Click to expand 🖱)</summary>
         <h5>Dependencies</h5>
 
 ```javascript
@@ -298,7 +337,7 @@ public class ConsulConfigRestController {
 <img src="captures/secrets.PNG" width="700">
         </details>
         <details>
-        <summary style="font-size:15px;cursor:pointer">📌 6. FRONTEND ANGULAR (Click to expand 🖱)</summary>
+        <summary style="font-size:15px;cursor:pointer">📌 7. FRONTEND ANGULAR (Click to expand 🖱)</summary>
 <h5>Customers list</h5>
 <img src="captures/customers.jpg" width="700">
 <h5>Products list</h5>
