@@ -5,45 +5,9 @@
 <details>
 <summary style="font-size:15px;cursor:pointer">📌 1. CONFIG SERVICE: (Click to expand 🖱)</summary>
         <h5>Consul registered services:</h5>
-    <img src="captures/consul-registered-services.jpg"></img>
+    <img src="captures/all-registered.jpg"></img>
 
 
-```javascript
-@Entity
-@Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class Customer {
-        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
-        private String name;
-        private String email;
-}
-```
-
-<h5>Repository CustomerRepository</h5>
-
-```javascript
-@RepositoryRestResource
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
-}
-```
-
-<h5>Données de test</h5>
-
-```javascript
-@Bean
-CommandLineRunner start(CustomerRepository customerRepository){
-        return args -> {
-                customerRepository.saveAll(List.of(
-                        Customer.builder().name("Mohamed").email("med@gmail.com").build(),
-                        Customer.builder().name("Hassan").email("hasan@gmail.com").build(),
-                        Customer.builder().name("IMane").email("imane@gmail.com").build()
-                ));
-                customerRepository.findAll().forEach(System.out::println);
-        };
-}
-```
-<h5>Customer service Test</h5>
-<img src="captures/customer-service-test.jpg" width="700">
 </details>
 
 <details>
