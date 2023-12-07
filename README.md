@@ -69,6 +69,7 @@ public class Order {
 }
 ```
 <h5>Entity ProductItem</h5>
+
 ```javascript
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
@@ -84,13 +85,13 @@ public class ProductItem {
     @ManyToOne
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Order order;
-
     public double getAmount(){
         return price*quantity*(1-discount);
     }
 }
 ```
 <h5>Customer Model</h5>
+
 ```javascript
 @Data
 public class Customer {
@@ -99,7 +100,9 @@ public class Customer {
     private String email;
 }
 ```
+
 <h5>Product Model</h5>
+
 ```javascript
 @Data
 public class Product {
@@ -111,6 +114,7 @@ public class Product {
 ```
 
 <h5>Repository OrderRepository</h5>
+
 ```javascript
 @RepositoryRestResource
 public interface OrderRepository extends JpaRepository<Order, Long> {
@@ -119,6 +123,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 }
 ```
 <h5>Customer Rest Client</h5>
+
 ```javascript
 @FeignClient(name = "customer-service")
 public interface CustomerRestClientService {
@@ -129,6 +134,7 @@ public interface CustomerRestClientService {
 }
 ```
 <h5>Inventory Rest Client</h5>
+
 ```javascript
 @FeignClient(name = "inventory-service")
 public interface InventoryRestClientService {
@@ -141,6 +147,7 @@ public interface InventoryRestClientService {
 <h5>Configuration</h5>
 <img src="captures/open-feign-config.jpg" width="700">
 <h5>fullOrder</h5>
+
 ```javascript
 @GetMapping("/fullOrder/{id}")
 public Order getOrder(@PathVariable Long id){
@@ -154,6 +161,7 @@ public Order getOrder(@PathVariable Long id){
     return order;
 }
 ```
+
 <img src="captures/order-service-full-order.jpg" width="700">
         </details>
         <details>
@@ -177,6 +185,7 @@ public Order getOrder(@PathVariable Long id){
 <h5>Consul config</h5>
 <img src="captures/token-key-value.jpg" width="700">
 <h5>Controlleur de test</h5>
+
 ```javascript
 @RestController
 public class ConsulConfigRestController {
@@ -191,6 +200,7 @@ public class ConsulConfigRestController {
 }
 ``` 
 <h5>Avec class de configuration</h5>
+
 ```java
 @RestController
 public class ConsulConfigRestController {
@@ -208,6 +218,7 @@ public class ConsulConfigRestController {
     }
 }
 ```
+
 <h5>Configuration des secrets avec vault</h5>
 <img src="captures/secrets.PNG" width="700">
         </details>
