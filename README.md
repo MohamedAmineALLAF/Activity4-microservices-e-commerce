@@ -10,13 +10,44 @@
 <details>
 <summary style="font-size:15px;cursor:pointer">📌 1. CUSTOMER-SERVICE (Click to expand 🖱)</summary>
         <h5>Entity Customer</h5>
-        <img src="captures/Customer-entity.jpg" >
-        <h5>Repository CustomerRepository</h5>
-        <img src="captures/customer-repo.jpg" width="700">
-        <h5>Données de test</h5>
-        <img src="captures/customer-data.jpg" width="700">
-        <h5>Customer service Test</h5>
-        <img src="captures/customer-service-test.jpg" width="700">
+
+
+```javascript
+@Entity
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
+public class Customer {
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+        private String name;
+        private String email;
+}
+```
+
+<h5>Repository CustomerRepository</h5>
+
+```javascript
+@RepositoryRestResource
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
+}
+```
+
+<h5>Données de test</h5>
+
+```javascript
+@Bean
+CommandLineRunner start(CustomerRepository customerRepository){
+        return args -> {
+                customerRepository.saveAll(List.of(
+                        Customer.builder().name("Mohamed").email("med@gmail.com").build(),
+                        Customer.builder().name("Hassan").email("hasan@gmail.com").build(),
+                        Customer.builder().name("IMane").email("imane@gmail.com").build()
+                ));
+                customerRepository.findAll().forEach(System.out::println);
+        };
+}
+```
+<h5>Customer service Test</h5>
+<img src="captures/customer-service-test.jpg" width="700">
 </details>
 <details>
 <summary style="font-size:15px;cursor:pointer">📌 2. GATEWAY-SERVICE (Click to expand 🖱)</summary>
@@ -30,13 +61,57 @@
 
 <details>
         <summary style="font-size:15px;cursor:pointer">📌 3. INVENTORY-SERVICE (Click to expand 🖱)</summary>
-        <h5>Entity Product</h5>
-        <img src="captures/product-entity.jpg" width="700">
-        <h5>Repository ProductRepository</h5>
-        <img src="captures/product-repo.jpg" width="700">
-        <h5>Données de test</h5>
-        <img src="captures/test-data.jpg" width="700">
-        <h5>Test de l'inventory service</h5>
+<h5>Entity Product</h5>
+
+```javascript
+@Entity
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
+public class Product {
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+        private String name;
+        private double price;
+        private int quantity;
+}
+```
+
+<h5>Repository ProductRepository</h5>
+
+```javascript
+@RepositoryRestResource
+public interface ProductRepository extends JpaRepository<Product, Long> {
+}
+
+```
+
+<h5>Données de test</h5>
+
+
+```javascript
+@Bean
+CommandLineRunner start(ProductRepository productRepository)
+{
+        return args -> {
+                Random
+                random = new Random();
+                for (int i = 1;
+                i < 10;
+                i++
+        )
+                {
+                        productRepository.saveAll(List.of(
+                                Product.builder()
+                                        .name("Laptop " + i)
+                                        .price(1200 + Math.random() * 10000)
+                                        .quantity(1 + random.nextInt(200)).build()
+                        ));
+                }
+
+        };
+}
+```
+
+<h5>Test de l'inventory service</h5>
         <img src="captures/inventory-test-.jpg" width="700">
         </details>
 
