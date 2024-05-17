@@ -31,7 +31,6 @@ public class InventoryServiceApplication {
 								.quantity(1+random.nextInt(200)).build()
 		        ));
 			}
-
 		};
 	}
 }
